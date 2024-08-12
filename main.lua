@@ -13,29 +13,34 @@ end
 
 function love.mousepressed(x, y, button)
 
-    burgerIndex = Burgers:checkBurgers(x,y)
+    burgerIndex = Burgers:checkBurgers(x, y)
 
     -- MAYBE make st when click and burger overlap, insert(newX, newY) st dont overlap
     if button == 1 and burgerIndex == 0 then
         Burgers:insert(x, y)
     end 
 
-    --[[if button == 1 and burgerIndex ~= 0 then
-        Burgers:move(mouseX, mouseY, burgerIndex)
-    end]]
+    if button == 1 and burgerIndex ~= 0 then
+        Burgers:move(burgerIndex)
+    end
 end 
 
+function love.mousereleased(x, y, button)
+    if button == 1 and burgerIndex ~= 0 then
+        Burgers:move(nil)
+    end
+end
+
 function love.update(dt)
-    Burgers:update(dt)
-
     mouseX, mouseY = love.mouse.getPosition()
+    Burgers:update(mouseX, mouseY, dt)
 
-    if love.mouse.isDown(1) then -- TODO: FIX THIS
+    --[[if love.mouse.isDown(1) then -- TODO: FIX THIS
         burgerIndex = Burgers:checkBurgers(mouseX, mouseY)
         if burgerIndex ~= 0 then
             Burgers:move(mouseX, mouseY, burgerIndex)
         end
-    end
+    end]]
 end
 
 function love.draw()

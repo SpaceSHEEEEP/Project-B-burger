@@ -6,7 +6,7 @@ Burgers = {}
 -- Below is the table of burgers
 local burgerTable = {}
 
-local moveBurger = nil
+local moveBurgerIndex = nil
 
 function Burgers:insert(x, y)
 
@@ -38,20 +38,20 @@ function Burgers:checkBurgers(mouseX, mouseY)
     return 0
 end
 
-function Burgers:move(x, y, index)
-    moveBurger = {x, y, index}
+function Burgers:move(index)
+    moveBurgerIndex = index
 end
 
-function Burgers:update(dt)
+function Burgers:update(mouseX, mouseY, dt)
     for _, burger in pairs(burgerTable) do
         burger:update(dt)
     end
 
-    if moveBurger ~= nil then
-        burgerTable[moveBurger[3]].x = moveBurger[1] - BURGER_WIDTH/2
-        burgerTable[moveBurger[3]].healthbar.x = moveBurger[1] - BURGER_WIDTH/2
-        burgerTable[moveBurger[3]].y = moveBurger[2] - BURGER_HEIGHT/2
-        burgerTable[moveBurger[3]].healthbar.y = moveBurger[2] - BURGER_HEIGHT/2 - HEALTHBAR_VERT_OFFSET
+    if moveBurgerIndex ~= nil then
+        burgerTable[moveBurgerIndex].x = mouseX - BURGER_WIDTH/2
+        burgerTable[moveBurgerIndex].healthbar.x = mouseX - BURGER_WIDTH/2
+        burgerTable[moveBurgerIndex].y = mouseY - BURGER_HEIGHT/2
+        burgerTable[moveBurgerIndex].healthbar.y = mouseY - BURGER_HEIGHT/2 - HEALTHBAR_VERT_OFFSET
     end
 end
 

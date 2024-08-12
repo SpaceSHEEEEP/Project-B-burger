@@ -1,8 +1,10 @@
 require 'Background'
 require 'Burgers'
+require 'Graphics'
 
 function love.load()
     Background:load()
+    Graphics:load()
 end
 
 function love.keypressed(key)

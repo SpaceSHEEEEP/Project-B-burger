@@ -1,5 +1,6 @@
 require 'constants'
 require 'Healthbar'
+require 'Graphics'
 
 Burgers = {}
 
@@ -38,9 +39,11 @@ function Burgers:checkBurgers(mouseX, mouseY)
     return 0
 end
 
-function Burgers:move(index)
+function Burgers:move(index) -- maybe fix this? make it more organised? 
     moveBurgerIndex = index
 end
+
+-- implement burger fall function? fall off the hotplate
 
 function Burgers:update(mouseX, mouseY, dt)
     for _, burger in pairs(burgerTable) do
@@ -67,6 +70,7 @@ function generateBurger(xPos, yPos)
         y = yPos,
         width = BURGER_WIDTH,
         height = BURGER_HEIGHT,
+        radius = BURGER_RADIUS,
     
         r = 194/255,
         g = 143/255,
@@ -80,15 +84,14 @@ function generateBurger(xPos, yPos)
 
         draw = function(self)
             if self.healthbar.modified == 0 then
-                love.graphics.setColor(self.r, self.g, self.b, 1)
-                love.graphics.rectangle('fill', self.x, self.y, self.width, self.height) 
+                love.graphics.setColor(1,1,1,1)
+                love.graphics.draw(frozen_patty, self.x, self.y)
             elseif self.healthbar.modified == 1 then
-                love.graphics.setColor(self.r - 90/255, self.g - 90/255, self.b - 90/255, 1)
-                love.graphics.rectangle('fill', self.x, self.y, self.width, self.height) 
-
+                love.graphics.setColor(1,1,1,1)
+                love.graphics.draw(cooked_patty, self.x, self.y)
             elseif self.healthbar.modified == 2 then
-                love.graphics.setColor(self.r - 140/255, self.g - 140/255, self.b - 140/255, 1)
-                love.graphics.rectangle('fill', self.x, self.y, self.width, self.height) 
+                love.graphics.setColor(1,1,1,1)
+                love.graphics.draw(burnt_patty, self.x, self.y)
             end
             
             self.healthbar:draw()

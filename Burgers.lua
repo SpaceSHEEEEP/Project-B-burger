@@ -1,13 +1,15 @@
 require 'constants'
 require 'Healthbar'
 require 'Graphics'
+require 'Particles'
 
 Burgers = {}
 
 -- Below is the table of burgers
-local burgerTable = {}
-
-local moveBurgerIndex = nil
+function Burgers:load()
+    burgerTable = {}
+    moveBurgerIndex = nil
+end
 
 function Burgers:insert(x, y)
 
@@ -47,15 +49,17 @@ end
 -- implement burger fall function? fall off the hotplate
 
 function Burgers:update(mouseX, mouseY, dt)
-    for _, burger in pairs(burgerTable) do
-        burger:update(dt)
-    end
+    if #burgerTable > 0 then
+        for _, burger in pairs(burgerTable) do
+            burger:update(dt)
+        end
 
-    if moveBurgerIndex ~= nil then
-        burgerTable[moveBurgerIndex].x = mouseX - BURGER_RADIUS 
-        burgerTable[moveBurgerIndex].healthbar.x = mouseX - BURGER_RADIUS
-        burgerTable[moveBurgerIndex].y = mouseY - BURGER_RADIUS
-        burgerTable[moveBurgerIndex].healthbar.y = mouseY - BURGER_RADIUS - HEALTHBAR_VERT_OFFSET
+        if moveBurgerIndex ~= nil then
+            burgerTable[moveBurgerIndex].x = mouseX - BURGER_RADIUS 
+            burgerTable[moveBurgerIndex].healthbar.x = mouseX - BURGER_RADIUS
+            burgerTable[moveBurgerIndex].y = mouseY - BURGER_RADIUS
+            burgerTable[moveBurgerIndex].healthbar.y = mouseY - BURGER_RADIUS - HEALTHBAR_VERT_OFFSET
+        end
     end
 end
 
@@ -90,6 +94,7 @@ function generateBurger(xPos, yPos)
                 love.graphics.draw(cooked_patty, self.x, self.y)
             elseif self.healthbar.modified == 2 or self.healthbar.modified == 3 then
                 love.graphics.setColor(1,1,1,1)
+                Particles:draw(self.x + self.radius, self.y + self.radius, mouseY)
                 love.graphics.draw(burnt_patty, self.x, self.y)
             end
             

@@ -1,10 +1,13 @@
 require 'Background'
 require 'Burgers'
 require 'Graphics'
+require 'Particles'
 
 function love.load()
     Background:load()
+    Burgers:load()
     Graphics:load()
+    Particles:load()
 end
 
 function love.keypressed(key)
@@ -36,16 +39,11 @@ end
 function love.update(dt)
     mouseX, mouseY = love.mouse.getPosition()
     Burgers:update(mouseX, mouseY, dt)
-
-    --[[if love.mouse.isDown(1) then -- TODO: FIX THIS
-        burgerIndex = Burgers:checkBurgers(mouseX, mouseY)
-        if burgerIndex ~= 0 then
-            Burgers:move(mouseX, mouseY, burgerIndex)
-        end
-    end]]
+    Particles:update(dt)
 end
 
 function love.draw()
+    love.graphics.setBackgroundColor(0.7, 0.7, 0.7,1)
     Background:draw()
     Burgers:draw()
 

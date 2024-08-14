@@ -19,11 +19,11 @@ function Burgers:insert(x, y)
         y < HOTPLATE_Y + HOTPLATE_HEIGHT then
 
             local xPos = math.min(x - BURGER_RADIUS, HOTPLATE_X + HOTPLATE_WIDTH - BURGER_RADIUS * 2)
-            xPos = math.max(xPos, HOTPLATE_X)
+            xPos = math.max(xPos, HOTPLATE_X) -- this is at top left of burger
 
 
             local yPos = math.min(y - BURGER_RADIUS, HOTPLATE_Y + HOTPLATE_HEIGHT - BURGER_RADIUS* 2)
-            yPos = math.max(yPos, HOTPLATE_Y)
+            yPos = math.max(yPos, HOTPLATE_Y) -- this is at top left of burger
 
             table.insert(burgerTable, generateBurger(xPos, yPos))
     end
@@ -71,9 +71,10 @@ end
 
 function generateBurger(xPos, yPos)
     local myTable = {
-        x = xPos,
-        y = yPos,
         radius = BURGER_RADIUS,
+        x = xPos, -- top left
+        y = yPos, -- top left
+        rotation = math.random(math.random() * math.pi),
     
         r = 194/255,
         g = 143/255,
@@ -88,14 +89,15 @@ function generateBurger(xPos, yPos)
         draw = function(self)
             if self.healthbar.modified == 0 then
                 love.graphics.setColor(1,1,1,1)
-                love.graphics.draw(frozen_patty, self.x, self.y)
+                -- it took me WAY TOO LONG to make the damn burger rotate
+                love.graphics.draw(frozen_patty, self.x + self.radius, self.y + self.radius, self.rotation, 1, 1, self.radius, self.radius)
             elseif self.healthbar.modified == 1 then
                 love.graphics.setColor(1,1,1,1)
-                love.graphics.draw(cooked_patty, self.x, self.y)
+                love.graphics.draw(cooked_patty, self.x + self.radius, self.y + self.radius, self.rotation, 1, 1, self.radius, self.radius)
             elseif self.healthbar.modified == 2 or self.healthbar.modified == 3 then
                 love.graphics.setColor(1,1,1,1)
                 Particles:draw(self.x + self.radius, self.y + self.radius, mouseY)
-                love.graphics.draw(burnt_patty, self.x, self.y)
+                love.graphics.draw(burnt_patty, self.x + self.radius, self.y + self.radius, self.rotation, 1, 1, self.radius, self.radius)
             end
             
             self.healthbar:draw()

@@ -1,11 +1,11 @@
 require 'Background'
-require 'Burgers'
+require 'FoodItems'
 require 'Graphics'
 require 'Particles'
 
 function love.load()
     Background:load()
-    Burgers:load()
+    FoodItems:load()
     Graphics:load()
     Particles:load()
 end
@@ -38,14 +38,14 @@ end
 
 function love.update(dt)
     mouseX, mouseY = love.mouse.getPosition()
-    Burgers:update(mouseX, mouseY, dt)
+    FoodItems:update(mouseX, mouseY, dt)
     Particles:update(dt)
 end
 
 function love.draw()
     love.graphics.setBackgroundColor(0.7, 0.7, 0.7,1)
     Background:draw()
-    Burgers:draw()
+    FoodItems:draw()
 
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
     love.graphics.print('mouseX: ' .. tostring(mouseX), 10, 25)

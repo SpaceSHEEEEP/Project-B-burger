@@ -1,7 +1,8 @@
 require 'constants'
-require 'Healthbar'
+require 'Healthbar_copy'
 require 'Graphics'
 require 'Particles'
+require 'Burger'
 
 Burgers = {}
 
@@ -25,7 +26,7 @@ function Burgers:insert(x, y)
             local yPos = math.min(y - BURGER_RADIUS, HOTPLATE_Y + HOTPLATE_HEIGHT - BURGER_RADIUS* 2)
             yPos = math.max(yPos, HOTPLATE_Y) -- this is at top left of burger
 
-            table.insert(burgerTable, generateBurger(xPos, yPos))
+            table.insert(burgerTable, Burger:new({xPos, yPos})) -- ew 
     end
 
 end
@@ -80,7 +81,8 @@ function generateBurger(xPos, yPos)
         g = 143/255,
         b = 152/255,
 
-        healthbar = generateHealthBar(xPos, yPos - HEALTHBAR_VERT_OFFSET),
+        -- healthbar = generateHealthBar(xPos, yPos - HEALTHBAR_VERT_OFFSET),
+        healthbar = Healthbar:new({x = xPos, y = yPos - HEALTHBAR_VERT_OFFSET, timeLimit = BURGER_TIME_LIMIT}),
 
         update = function(self, dt)
             self.healthbar:update(dt)

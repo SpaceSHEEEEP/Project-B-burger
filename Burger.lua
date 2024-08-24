@@ -5,7 +5,7 @@ Burger = {
     radius = BURGER_RADIUS, 
     x = 0,
     y = 0,
-    rotation = math.random(math.random() * math.pi),
+    rotation = 0, 
     healthbar = {}
 }
 
@@ -30,11 +30,19 @@ function Burger:draw()
     self.healthbar:draw()
 end
 
+function Burger:move(mouseX, mouseY)
+    self.x = mouseX - BURGER_RADIUS 
+    self.y = mouseY - BURGER_RADIUS
+    self.healthbar.x = mouseX - BURGER_RADIUS
+    self.healthbar.y = mouseY - BURGER_RADIUS - HEALTHBAR_VERT_OFFSET
+end
+
 function Burger:new(t)
     t = t or {}
     local t2 = {
         x = t[1],
         y = t[2],
+        rotation = math.random() * math.pi,
         healthbar = Healthbar:new({x = t[1], y = t[2] - HEALTHBAR_VERT_OFFSET, timeLimit = BURGER_TIME_LIMIT})
     }
     setmetatable(t2, self)

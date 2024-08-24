@@ -1,0 +1,2 @@
+-- maybe have a hitbox thing, so easy to say a mouseclick is in hotplate?
+-- maybe dont need?

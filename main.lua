@@ -17,23 +17,11 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button)
-
-    burgerIndex = Burgers:checkBurgers(x, y)
-
-    -- MAYBE make st when click and burger overlap, insert(newX, newY) st dont overlap
-    if button == 1 and burgerIndex == 0 then
-        Burgers:insert(x, y)
-    end 
-
-    if button == 1 and burgerIndex ~= 0 then
-        Burgers:move(burgerIndex)
-    end
+    FoodItems:mousepressed(x, y, button)
 end 
 
 function love.mousereleased(x, y, button)
-    if button == 1 and burgerIndex ~= 0 then
-        Burgers:move(nil)
-    end
+    FoodItems:mousereleased(x, y, button)
 end
 
 function love.update(dt)
@@ -47,6 +35,7 @@ function love.draw()
     Background:draw()
     FoodItems:draw()
 
+    love.graphics.setColor(0, 0, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
     love.graphics.print('mouseX: ' .. tostring(mouseX), 10, 25)
     love.graphics.print('mouseY: ' .. tostring(mouseY), 10, 40)

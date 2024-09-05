@@ -3,6 +3,7 @@ require 'Healthbar_copy'
 require 'Graphics'
 require 'Particles'
 require 'Chicken'
+require 'Dustbin'
 
 Chickens = {}
 
@@ -32,6 +33,10 @@ function Chickens:mousereleased(x, y, button)
             self.chickenTable[self.moveChickenIndex].inOil = true
         end
 
+        if inBin(x,y) then
+            table.remove(self.chickenTable, self.moveChickenIndex)
+        end
+
         self.moveChickenIndex = 0
     end
 end
@@ -41,6 +46,17 @@ function inFryer(x, y)
         x < FRYER_X + FRYER_WIDTH - FRYER_OFFSET and 
         y > FRYER_Y + FRYER_OFFSET and 
         y < FRYER_Y + FRYER_HEIGHT - FRYER_OFFSET then
+            return true
+    else
+        return false 
+    end
+end
+
+function inBin(x, y)
+    if  x > BIN_X + BIN_OFFSET and 
+        x < BIN_X + BIN_WIDTH - BIN_OFFSET and 
+        y > BIN_Y + BIN_OFFSET and 
+        y < BIN_Y + BIN_HEIGHT - BIN_OFFSET then
             return true
     else
         return false 

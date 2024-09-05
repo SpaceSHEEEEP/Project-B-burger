@@ -14,7 +14,10 @@ function Bin:load()
         g = 69/255,
         b = 45/255
     }
+end
 
+function Bin:throwAway(objectIndex, objectTable)
+    table.remove(objectTable, objectIndex)
 end
 
 function Bin:draw()

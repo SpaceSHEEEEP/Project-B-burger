@@ -27,6 +27,10 @@ end
 
 function Burgers:mousereleased(x, y, button)
     if button == 1 and self.moveBurgerIndex ~= 0 then
+        if inBin(x,y) then
+            table.remove(self.burgerTable, self.moveBurgerIndex)
+        end
+
         self.moveBurgerIndex = 0
     end
 end
@@ -36,6 +40,17 @@ function inHotPlate(x, y)
         x < HOTPLATE_X + HOTPLATE_WIDTH and 
         y > HOTPLATE_Y and 
         y < HOTPLATE_Y + HOTPLATE_HEIGHT then
+            return true
+    else
+        return false 
+    end
+end
+
+function inBin(x, y)
+    if  x > BIN_X + BIN_OFFSET and 
+        x < BIN_X + BIN_WIDTH - BIN_OFFSET and 
+        y > BIN_Y + BIN_OFFSET and 
+        y < BIN_Y + BIN_HEIGHT - BIN_OFFSET then
             return true
     else
         return false 
